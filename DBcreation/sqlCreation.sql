@@ -10,4 +10,4 @@ CREATE TABLE `usuarios` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`),
     UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=34;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
