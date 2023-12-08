@@ -4,7 +4,7 @@
 $db_host = '127.0.0.1';
 $db_user = 'root';
 $db_password = 'root';
-$db_db = 'DWES2324TA_primer_trimestre1';
+$db_db = 'DWES2324TA_primer_trimestre';
 $db_port = 8889;
 
 try {
