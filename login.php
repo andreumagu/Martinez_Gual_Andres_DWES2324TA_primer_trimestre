@@ -5,15 +5,28 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
+// Recuperar datos del formulario de registro
+$username = $_POST["username"];
+$password = $_POST["password"];
+
 // Comprobar si hay cookies o no
 if (isset($_COOKIE['remember_username']) ? $_COOKIE['remember_username'] : '') {
-    $_SESSION['username'] = $_COOKIE['remember_username'];
-    header("Location: home.php"); // Rediriger a la pagina home
+    // Comprobar si los campos de usuario y contraseña estan llenos
+    if ($username && $password) {
+        // Virificamos el nombre y la contraseña para inciar sesion
+        comprobarUsr($pdo, $username, $password);
+    } else{
+        // Iniciamos sesion almacenada en cookies
+        $_SESSION['username'] = $_COOKIE['remember_username'];
+        header("Location: home.php"); // Rediriger a la pagina home
+    }
 } else {
-    // Recuperar datos del formulario de registro
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    // Virificamos el nombre y la contraseña para inciar sesion
+    comprobarUsr($pdo, $username, $password);
+}
 
+// Funcion para veridicar el nombre y la contraseña para inciar sesion
+function comprobarUsr($pdo, $username, $password){
     try {
         // Query para obtener un usuario por nombre de usuario
         $sql = "SELECT * FROM usuarios WHERE username=:username";
@@ -41,12 +54,12 @@ if (isset($_COOKIE['remember_username']) ? $_COOKIE['remember_username'] : '') {
                 $_SESSION['username'] = $username;
                 header("Location: home.php");
             } else {
-                // Contraseña inválida
-                $errors[] = "Contraseña inválida";
+                // Usuario y o contraseña invalidos
+                $error = "Usuario y o contraseña invalidos";
             }
         } else {
-            // Nombre de usuario inválido
-            $errors[] = "Nombre de usuario inválido";
+            // Se ha cerrado la anterior sesión
+            $error = "Se ha cerrado la sesión guardada";
         }
 
     } catch (PDOException $e) {
@@ -55,7 +68,10 @@ if (isset($_COOKIE['remember_username']) ? $_COOKIE['remember_username'] : '') {
 
     // Se cierra la declaración
     $stmt = null;
+
+    // Pintamos el error si lo ha habido
+    echo $error;
 }
 
-echo "Se ha cerrado la anterior sesión";
+
 ?>
