@@ -18,7 +18,7 @@
     <header class="container">
         <h1 class="text-center mt-3">Home</h1>
     </header>
-    <div class="container pt-5 center-text" id="contenedor">
+    <div class="container pt-5" id="contenedor">
         <!-- Contenido dinámico cargado por JavaScript -->
         <h3 id="mensajeUsuario"></h3>
         
